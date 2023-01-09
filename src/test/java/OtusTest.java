@@ -1,10 +1,7 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -17,11 +14,16 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class OtusTest {
 
-    static WebDriver driver;
+    WebDriver driver;
+
 
     @BeforeAll
     public static void setUp() {
         WebDriverManager.chromedriver().setup();
+    }
+
+    @BeforeEach
+    public void init() {
         driver = new ChromeDriver();
     }
 
@@ -33,15 +35,14 @@ public class OtusTest {
     }
 
     @Test
-    public void firstTest() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless");
-        driver = new ChromeDriver(options);
-        driver.get("https://duckduckgo.com/");
-        driver.findElement(By.cssSelector("#search_form_input_homepage")).sendKeys("ОТУС");
-        driver.findElement(By.cssSelector("#search_button_homepage")).click();
-        Assertions.assertTrue(driver.findElement(By.cssSelector("#r1-0 > div > h2 > a")).
+    public void firstTest() throws InterruptedException {
+        ChromeDriver newDriver = new ChromeDriver(new ChromeOptions().addArguments("headless"));
+        newDriver.get("https://duckduckgo.com/");
+        newDriver.findElement(By.cssSelector("#search_form_input_homepage")).sendKeys("ОТУС");
+        newDriver.findElement(By.cssSelector("#search_button_homepage")).click();
+        Assertions.assertTrue(driver.findElement(By.cssSelector("#r1-0 > div.ikg2IXiCD14iVX7AdZo1 > h2")).
                 getText().contains("Онлайн‑курсы для профессионалов, дистанционное обучение"));
+        newDriver.close();
     }
 
     @Test
@@ -64,9 +65,9 @@ public class OtusTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        driver.findElement(By.cssSelector("div:nth-child(3) > input")).sendKeys(login);
-        driver.findElement(By.cssSelector("div:nth-child(4) > input")).sendKeys(password);
-        driver.findElement(By.cssSelector("div:nth-child(5) > button")).submit();
+        driver.findElement(By.cssSelector(".new-input[name='email']")).sendKeys(login);
+        driver.findElement(By.cssSelector(".new-input[name='password']")).sendKeys(password);
+        driver.findElement(By.cssSelector(".new-button[type='submit']")).submit();
         Logger logger = LogManager.getLogger(OtusTest.class);
         Set<Cookie> cookieList = driver.manage().getCookies();
         for (Cookie cookie : cookieList) {
