@@ -9,7 +9,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +43,14 @@ public class OtusTest {
         options.addArguments("headless")
                 .addArguments("--window-size=1920,1200")
                 .addArguments("--ignore-certificate-errors")
-                .addArguments("--silent");
+                .addArguments("--silent")
+                .addArguments("--test-type")
+                .addArguments("--disable-gpu")
+                .addArguments("--no-first-run")
+                .addArguments("--no-default-browser-check")
+                .addArguments("--ignore-certificate-errors")
+                .addArguments("--start-maximized")
+                .addArguments("--headless");
         ChromeDriver newDriver = new ChromeDriver(options);
         WebDriverWait wait = new WebDriverWait(newDriver, Duration.ofSeconds(10));
 
@@ -53,8 +59,8 @@ public class OtusTest {
         newDriver.findElement(By.cssSelector("#search_form_input_homepage")).sendKeys("ОТУС");
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#search_button_homepage")));
         newDriver.findElement(By.cssSelector("#search_button_homepage")).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#r1-0 > div.ikg2IXiCD14iVX7AdZo1 > h2")));
-        Assertions.assertTrue(driver.findElement(By.cssSelector("#r1-0 > div.ikg2IXiCD14iVX7AdZo1 > h2")).
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#searchbox_homepage")));
+        Assertions.assertTrue(newDriver.findElement(By.cssSelector("#r1-0 > div.ikg2IXiCD14iVX7AdZo1 > h2")).
                 getText().contains("Онлайн‑курсы для профессионалов, дистанционное обучение"));
         newDriver.close();
     }
