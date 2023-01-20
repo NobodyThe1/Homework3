@@ -39,9 +39,11 @@ public class OtusTest {
 
     @Test
     public void firstTest() throws InterruptedException {
+        driver.close();
+        driver.quit();
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("headless")
-                .addArguments("--window-size=1920,1200")
+         options.addArguments("--window-size=1920,1200")
                 .addArguments("--ignore-certificate-errors")
                 .addArguments("--silent")
                 .addArguments("--test-type")
@@ -62,7 +64,9 @@ public class OtusTest {
         //wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#searchbox_homepage")));
         Assertions.assertTrue(newDriver.findElement(By.cssSelector("#r1-0 > div.ikg2IXiCD14iVX7AdZo1 > h2")).
                 getText().contains("Онлайн‑курсы для профессионалов, дистанционное обучение"));
+        
         newDriver.close();
+        newDriver.quit();
     }
 
     @Test
