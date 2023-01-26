@@ -41,7 +41,8 @@ public class OtusTest {
     public void fullScreenTest() {
         driver.manage().window().fullscreen();
         driver.get("https://demo.w3layouts.com/demos_new/template_demo/03-10-2020/photoflash-liberty-demo_Free/685659620/web/index.html?_ga=2.181802926.889871791.1632394818-2083132868.1632394818");
-        driver.findElement(By.cssSelector("li.portfolio-item2.content[data-id='id-2']")).click();
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript("document.querySelector('li.portfolio-item2.content[data-id='id-2']').click();");
         driver.findElement(By.cssSelector("div.pp_hoverContainer")).isDisplayed();
     }
 
