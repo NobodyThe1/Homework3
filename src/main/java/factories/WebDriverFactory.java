@@ -1,6 +1,6 @@
 package factories;
 
-//import com.opera.core.systems.OperaDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import data.BrowserData;
 import exceptions.BrowserNotSupportedException;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -26,10 +26,10 @@ public class WebDriverFactory implements IWebDriverFactory {
                 WebDriverManager.firefoxdriver().setup();
                 return new EventFiringWebDriver(new FirefoxDriver());
             }
-        //    case "opera": {
-        //        WebDriverManager.operadriver().setup();
-        //        return new EventFiringWebDriver(new OperaDriver());
-        //    }
+            case "opera": {
+                WebDriverManager.operadriver().setup();
+                return new EventFiringWebDriver(new OperaDriver());
+            }
             default:
                 try {
                     throw new BrowserNotSupportedException(browserName);
